@@ -1,0 +1,141 @@
+<div class="row my-4">
+	<div class="col-12">
+		<!--Start Data table-->
+	    <div class="card">
+          
+          <h5 class="card-header bg-dark text-white">Agents</h5>
+          <button type="button" id="add-agent" class="btn bg-gradient-info" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#new-agent">
+            Add Agent
+          </button>
+         
+          <div class="card-body">
+            <div class="table-responsive text-nowrap">
+              <table
+                id="agents_tbl"
+                class="table align-items-center mb-0">
+                
+              </table>
+            </div>
+          </div>
+        </div>
+		<!--End Data table-->
+	</div>
+</div>
+
+<div class="modal fade" id="agent-actions" tabindex="-1" role="dialog" aria-labelledby="input-title" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="input-title">Available Options</h5>
+        <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true"><i class="bx bx-x"></i></span>
+        </button>
+      </div>
+      
+      <div class="modal-body" style=" text-align: center">
+        <button type="button" style="width: 50%; text-align: center;" id="edit-btn" class="btn bg-gradient-info" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#edit-agent">Edit</button>
+        <button type="button" style="width: 50%; text-align: center" class="btn bg-gradient-danger" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#remove-agent">Remove</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="edit-agent" tabindex="-1" role="dialog" aria-labelledby="input-title" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="input-title">Edit Agent Info</h5>
+        <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true"><i class="bx bx-x"></i></span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="l_name" class="col-form-label">First Name</label>
+            <input type="text" class="form-control" placeholder="Enter First Name" id="f_name">
+          </div>
+          <div class="form-group">
+            <label for="l_name" class="col-form-label">Last Name</label>
+            <input type="text" class="form-control" placeholder="Enter Last Name" id="l_name">
+          </div>
+          <div class="form-group">
+            <label for="email" class="col-form-label">Email</label>
+            <input type="email" class="form-control" placeholder="Enter Email" id="email">
+          </div>
+          <div class="form-group">
+            <label for="phone" class="col-form-label">Phone Number</label>
+            <input type="text" class="form-control" placeholder="Enter Phone Number" id="phone">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn bg-gradient-dark" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" id="save-editbtn" class="btn bg-gradient-info">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="remove-agent" tabindex="-1" role="dialog" aria-labelledby="input-title" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="input-title">Are you sure you want to remove this agent?</h5>
+        <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true"><i class="bx bx-x"></i></span>
+        </button>
+      </div>
+      
+      <div class="modal-body" style=" text-align: center">
+        <button type="button" style="width: 50%; text-align: center;" class="btn bg-gradient-info" data-bs-dismiss="modal">No, Cancel</button>
+        <button type="button" id="remove-btn" style="width: 50%; text-align: center" class="btn bg-gradient-danger">Yes, Remove This Agent</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="new-agent" tabindex="-1" role="dialog" aria-labelledby="input-title" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="input-title">New Agent</h5>
+        <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true"><i class="bx bx-x"></i></span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="n-f_name" class="col-form-label">First Name</label>
+            <input type="text" class="form-control" placeholder="Enter First Name" id="n-f_name">
+          </div>
+          <div class="form-group">
+            <label for="n-l_name" class="col-form-label">Last Name</label>
+            <input type="text" class="form-control" placeholder="Enter Last Name" id="n-l_name">
+          </div>
+          <div class="form-group">
+            <label for="n-email" class="col-form-label">Email</label>
+            <input type="n-email" class="form-control" placeholder="Enter Email" id="n-email">
+          </div>
+          <div class="form-group">
+            <label for="n-phone" class="col-form-label">Phone Number</label>
+            <input type="text" class="form-control" placeholder="Enter Phone Number" id="n-phone">
+          </div>
+          <div class="form-group">
+            <label for="n-username" class="col-form-label">Username</label>
+            <input type="text" class="form-control" placeholder="Enter Username" id="n-username">
+          </div>
+          <div class="form-group">
+            <label for="n-password" class="col-form-label">Phone Password</label>
+            <input type="text" class="form-control" placeholder="Enter Password" id="n-password">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn bg-gradient-dark" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" id="save-new-agent" class="btn bg-gradient-info">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
