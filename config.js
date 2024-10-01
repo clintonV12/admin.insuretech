@@ -1,5 +1,5 @@
-const SERVER_URL   = "http://localhost/insuretech-api/index.php/";
-const DOWNLOAD_URL = "http://localhost/insuretech-api/uploads/";
+const SERVER_URL   = "http://localhost/api.insuretech/index.php/";
+const DOWNLOAD_URL = "http://localhost/api.insuretech/uploads/";
 const BASE_URL     = "http://localhost/admin.insuretech/";
 let pagename       = 'home'; // Default to 'home' page
 let TOKEN          = null;
