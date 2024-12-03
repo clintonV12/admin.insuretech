@@ -61,7 +61,6 @@ export function RequestAllStuffInfo() {
 
   $("#stuff_tbl tbody").on("click", "tr", function() {
       var data = table.row(this).data();
-      console.log(data.id);
 
       const modal = new bootstrap.Modal('#stuff-actions');
       modal.show();

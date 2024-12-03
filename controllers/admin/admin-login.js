@@ -50,7 +50,7 @@ function requestLogin(username, password) {
   req.done(function(data){
       //if the call is successful
       if (data.token) {
-        USER_TYPE      = "ADMIN";
+        USER_TYPE      = data.role;
         TOKEN          = data.token;
         ADMIN_USERNAME = data.username;
         ADMIN_ID       = data.id;

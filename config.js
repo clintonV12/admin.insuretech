@@ -9,11 +9,13 @@ let TOKEN          = null;
 let ADMIN_USERNAME = null;
 let ADMIN_ID       = null;
 let USER_TYPE      = null; //ADMIN
+let clientRowData  = null;
 
 function initGlobalVars() {
 	pagename       = 'home'; // Default to 'home' page
 	TOKEN          = null;
 	ADMIN_USERNAME = null;
 	ADMIN_ID       = null;
-	USER_TYPE      = null; //ADMIN	
+	USER_TYPE      = null; //ADMIN
+	clientRowData  = null;
 }

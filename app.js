@@ -13,6 +13,14 @@ import { AdminSideBar } from './components/admin/admin-sidebar.js';
 import { AdminDashboard } from './components/admin/admin-dashboard.js';
 import { RequestAllClientInfo, RequestStats } from './controllers/admin/admin-dashboard.js';
 
+import { TransactionHistory } from './components/admin/client_details/transaction-history.js';
+import { Beneficiary } from './components/admin/client_details/beneficiary.js';
+import { Covered } from './components/admin/client_details/covered.js';
+
+import { RequestBeneficiaryInfo } from './controllers/admin/client_details/beneficiary.js';
+import { RequestCoveredInfo } from './controllers/admin/client_details/covered.js';
+import { RequestTranasctionInfo } from './controllers/admin/client_details/transaction_history.js';
+
 import { Claims } from './components/admin/claims.js';
 import { RequestAllClaimsInfo } from './controllers/admin/claims.js';
 
@@ -80,7 +88,16 @@ function renderPage(content) {
         });
     });
 
-    document.getElementById(pagename).classList.add('active');
+    if (pagename == 'transaction-history' ||
+        pagename == 'beneficiary' ||
+        pagename == 'covered'
+        ) 
+    {
+        document.getElementById('admin-dashboard').classList.add('active');
+    } else{
+        document.getElementById(pagename).classList.add('active');
+    }
+
     getControllerFunctions(pagename);
 }
 
@@ -108,6 +125,15 @@ export async function router() {
             break;
         case 'stuff':
             content = await Stuff();
+            break;
+        case 'transaction-history':
+            content = await TransactionHistory();
+            break;
+        case 'beneficiary':
+            content = await Beneficiary();
+            break;
+        case 'covered':
+            content = await Covered();
             break;
         default:
             content = await AdminLogin();
@@ -138,7 +164,16 @@ function setPageTitle() {
             pageTitle = 'Agents'
             break;
         case 'stuff':
-            pageTitle = 'Stuff'
+            pageTitle = 'Staff'
+            break;
+        case 'transaction-history':
+            pageTitle = 'Transaction History';
+            break;
+        case 'beneficiary':
+            pageTitle = 'Beneficiary';
+            break;
+        case 'covered':
+            pageTitle = 'Covered'
             break;
         default:
             pageTitle = 'Home';
@@ -177,5 +212,16 @@ function getControllerFunctions(pagename) {
             RequestAllStuffInfo();
             AddNewStuff();
             break;
+        case 'transaction-history':
+            RequestTranasctionInfo();
+            break;
+        case 'beneficiary':
+            RequestBeneficiaryInfo();
+            break;
+        case 'covered':
+            RequestCoveredInfo();
+            break;
     }
 }
+
+window.router   = router;

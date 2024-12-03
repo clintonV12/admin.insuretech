@@ -1,97 +1,84 @@
 import { router } from '../../app.js';
 
-export function RequestAllClientInfo() {
-  const raw = {
-    "all-clients": 1
-  };
+const ajaxErrorHandler = (xhr, error, code) => {
+  console.error("AJAX Error:", error, code);
+  console.log(xhr);
+  showErrorMsg("Error", xhr.responseText || "An unexpected error occurred.");
+};
 
-  var table = $('#policy_tbl').DataTable({
+export function RequestAllClientInfo() {
+  const raw = JSON.stringify({ "all-clients": 1 });
+
+  const table = $('#policy_tbl').DataTable({
     processing: true,
     serverSide: false,
     pageLength: 5,
     responsive: true,
     bLengthChange: true,
     bFilter: true,
-    layout: {
-      bottomStart: {
-        buttons: ['copyHtml5','excelHtml5','csvHtml5', 'print']
-      }
-    },
+    buttons: ['copyHtml5', 'excelHtml5', 'csvHtml5', 'print'],
+
     ajax: {
       method: "POST",
-      url: SERVER_URL + "admin",
-      data: function(d) {
-        return JSON.stringify(raw);
-      },
+      url: `${SERVER_URL}admin`,
+      data: () => raw,
       dataSrc: "",
       headers: {
         "Authorization": `Bearer ${TOKEN}`,
         "Content-Type": "application/json"
       },
-      error: function(xhr, error, code) {
-        console.error("AJAX Error: ", error, code);
-        console.log(xhr);
-      }
+      error: ajaxErrorHandler
     },
 
     columns: [
+      { title: "Phone Number", data: "phone_number" },
+      { title: "First Name", data: "first_name" },
+      { title: "Last Name", data: "last_name" },
+      { title: "National ID", data: "national_id" },
       {
-        title: "Phone Number",
-        data: "phone_number"
-      },
-      {
-        title: "First Name",
-        data: "first_name"
-      },
-      {
-        title: "Last Name",
-        data: "last_name"
-      },
-      {
-        title: "National ID",
-        data: "national_id"
-      },
-      {
-        title: "Registered At",
-        data: "created_at",
+        title: "Actions",
+        data: null,
+        defaultContent: `
+          <div class="dropdown">
+            <button type="button" class="btn btn-info dropdown-toggle" href="#" id="client_action" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="bx bx-dots-vertical-rounded"></i>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="client_action">
+              <li><a class="dropdown-item" href="#" onclick="openTransactionHistory()">View Transactions</a></li>
+              <li><a class="dropdown-item" href="#" onclick="openCovered()">View Covered</a></li>
+              <li><a class="dropdown-item" href="#" onclick="openBeneficiary()">View Beneficiaries</a></li>
+            </ul>
+          </div>`,
+        targets: -1
       }
     ]
   });
 
+  table.on("click", "button", function(e) {
+    let data = table.row(e.target.closest('tr')).data();
+    clientRowData = data;
+  });
 
-  // Debugging: Check if DataTable initialization is successful
-  console.log("DataTable initialized: ", table);
+  console.log("DataTable initialized:", table);
 }
 
 export function RequestStats() {
-  
-  const raw = JSON.stringify({
-      "all-stats": "1",
-    });
-  
+  const raw = JSON.stringify({ "all-stats": 1 });
 
-  var req = $.ajax({
-    "url": SERVER_URL + "admin",
-    "method": "POST",
-    "data": raw,
-    "headers": {
-      "Authorization": `Bearer ${TOKEN}`,
-      "Content-Type": "application/json"
+  $.ajax({
+    url: `${SERVER_URL}admin`,
+    method: "POST",
+    data: raw,
+    headers: {
+        "Authorization": `Bearer ${TOKEN}`,
+        "Content-Type": "application/json"
       }
-  });
-
-  req.done(function(data){
-      //if the call is successful
-      document.getElementById("total_clients").innerText = data.total_clients;
-      document.getElementById("total_agents").innerText = data.total_agents;
-      document.getElementById("total_covered").innerText = data.total_covered;
-      document.getElementById("total_claims").innerText = data.total_claims;
-  });
-
-  req.fail(function(jqXHR, textStatus, errorThrown){
-      //if the call is not successful
-      console.log(jqXHR);
-      showErrorMsg("Error", jqXHR.responseText);
-    });
-
+  })
+    .done(data => {
+      document.getElementById("total_clients").innerText = data.total_clients || 0;
+      document.getElementById("total_agents").innerText = data.total_agents || 0;
+      document.getElementById("total_covered").innerText = data.total_covered || 0;
+      document.getElementById("total_claims").innerText = data.total_claims || 0;
+    })
+    .fail(ajaxErrorHandler);
 }

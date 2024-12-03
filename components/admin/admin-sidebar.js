@@ -1,5 +1,30 @@
 export function AdminSideBar() {
-    return `
+  // Check if the user is an ADMIN
+  const isAdmin = USER_TYPE === "ADMIN" || USER_TYPE === "SUPER_ADMIN";
+
+  // Define the sidebar items
+  const sidebarItems = [
+    { id: "admin-dashboard", icon: "bx-home", label: "Dashboard", visible: true },
+    { id: "claims", icon: "bx-file", label: "Claims", visible: true },
+    { id: "stuff", icon: "bx-group", label: "Staff", visible: isAdmin },
+    { id: "agents", icon: "bx-id-card", label: "Agents", visible: isAdmin },
+    { id: "login", icon: "bx-exit", label: "Logout", visible: true }
+  ];
+
+  // Generate the list of navigation items dynamically
+  const navItems = sidebarItems
+    .filter(item => item.visible)
+    .map(item => `
+      <li class="nav-item">
+        <a class="nav-link nav-page" href="#" id="${item.id}">
+          <i class="bx ${item.icon}"></i>
+          <span class="nav-link-text ms-1">${item.label}</span>
+        </a>
+      </li>
+    `)
+    .join('');
+
+  return `
     <aside class="bg-light sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3" id="sidenav-main">
       <div class="sidenav-header">
         <i class="bx bx-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
@@ -9,48 +34,12 @@ export function AdminSideBar() {
         </a>
       </div>
       <hr class="horizontal dark mt-0">
-      <div class="collapse navbar-collapse  w-auto  max-height-vh-50 h-50" id="sidenav-collapse-main">
-
+      <div class="collapse navbar-collapse w-auto max-height-vh-50 h-50" id="sidenav-collapse-main">
         <ul class="navbar-nav">
-
-          <li class="nav-item">
-            <a class="nav-link nav-page" href="#" id="admin-dashboard">
-              <i class="bx bx-home"></i>
-              <span class="nav-link-text ms-1">Dashboard</span>
-            </a>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link nav-page " href="#" id="claims">
-              <i class="bx bx-file"></i>
-              <span class="nav-link-text ms-1">Claims</span>
-            </a>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link nav-page " href="#" id="stuff">
-              <i class="bx bx-group"></i>
-              <span class="nav-link-text ms-1">Stuff</span>
-            </a>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link nav-page " href="#" id="agents">
-              <i class="bx bx-id-card"></i>
-              <span class="nav-link-text ms-1">Agents</span>
-            </a>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link nav-page " href="#" id="login">
-              <i class="bx bx-exit"></i>
-              <span class="nav-link-text ms-1">Logout</span>
-            </a>
-          </li>
+          ${navItems}
         </ul>
       </div>
-
-      <div class="sidenav-footer mx-3 ">
+      <div class="sidenav-footer mx-3">
         <div class="card card-background shadow-none card-background-mask-info" id="sidenavCard">
           <div class="full-background" style="background-image: url('assets/img/curved-images/white-curved.jpeg')"></div>
           <div class="card-body text-start p-3 w-100">
@@ -64,8 +53,7 @@ export function AdminSideBar() {
             </div>
           </div>
         </div>
-
       </div>
     </aside>
-    `;
+  `;
 }
