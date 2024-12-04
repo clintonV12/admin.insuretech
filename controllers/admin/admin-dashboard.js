@@ -10,48 +10,46 @@ export function RequestAllClientInfo() {
   const raw = JSON.stringify({ "all-clients": 1 });
 
   const table = $('#policy_tbl').DataTable({
-    processing: true,
-    serverSide: false,
-    pageLength: 5,
-    responsive: true,
-    bLengthChange: true,
-    bFilter: true,
-    buttons: ['copyHtml5', 'excelHtml5', 'csvHtml5', 'print'],
-
-    ajax: {
-      method: "POST",
-      url: `${SERVER_URL}admin`,
-      data: () => raw,
-      dataSrc: "",
-      headers: {
-        "Authorization": `Bearer ${TOKEN}`,
-        "Content-Type": "application/json"
+      processing: true,
+      serverSide: false,
+      pageLength: 5,
+      responsive: false,
+      bLengthChange: true,
+      bFilter: true,
+      layout: {
+        bottomStart: {
+          buttons: ['copyHtml5','excelHtml5','csvHtml5', 'print']
+        }
       },
-      error: ajaxErrorHandler
-    },
+      ajax: {
+          method: "POST",
+          url: `${SERVER_URL}admin`,
+          data: () => raw,
+          dataSrc: "",
+          headers: {
+              "Authorization": `Bearer ${TOKEN}`,
+              "Content-Type": "application/json"
+          },
+          error: ajaxErrorHandler
+      },
 
-    columns: [
-      { title: "Phone Number", data: "phone_number" },
-      { title: "First Name", data: "first_name" },
-      { title: "Last Name", data: "last_name" },
-      { title: "National ID", data: "national_id" },
-      {
-        title: "Actions",
-        data: null,
-        defaultContent: `
-          <div class="dropdown">
-            <button type="button" class="btn btn-info dropdown-toggle" href="#" id="client_action" data-bs-toggle="dropdown" aria-expanded="false">
-              <i class="bx bx-dots-vertical-rounded"></i>
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="client_action">
-              <li><a class="dropdown-item" href="#" onclick="openTransactionHistory()">View Transactions</a></li>
-              <li><a class="dropdown-item" href="#" onclick="openCovered()">View Covered</a></li>
-              <li><a class="dropdown-item" href="#" onclick="openBeneficiary()">View Beneficiaries</a></li>
-            </ul>
-          </div>`,
-        targets: -1
-      }
-    ]
+      columns: [
+          { title: "Phone Number", data: "phone_number" },
+          { title: "First Name", data: "first_name" },
+          { title: "Last Name", data: "last_name" },
+          { title: "National ID", data: "national_id" },
+          {
+              title: "Actions",
+              data: null,
+              defaultContent: `
+                  <div class="dropdown">
+                      <button class="btn btn-sm bg-gradient-info" type="button" id="client_action" data-bs-toggle="modal" data-bs-target="#actionModal">
+                          <i class="bx bx-dots-horizontal-rounded"></i>
+                      </button>
+                  </div>`,
+              targets: -1
+          }
+      ],
   });
 
   table.on("click", "button", function(e) {
